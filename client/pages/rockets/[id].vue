@@ -11,26 +11,9 @@
 	</v-container>
 </template>
 <script lang="ts" setup>
-const route = useRoute()
+import type { Rocket } from '~/types/missions'
 
-interface Rocket {
-	name: string
-	description: string
-	first_flight: string
-	stages: number
-	height: {
-		feet: number
-		meters: number
-	}
-	diameter: {
-		feet: number
-		meters: number
-	}
-	mass: {
-		kg: number
-		lb: number
-	}
-}
+const route = useRoute()
 
 const query = gql`
 	query getRocket($rocketId: ID!) {

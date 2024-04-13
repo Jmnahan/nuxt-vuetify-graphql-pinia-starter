@@ -32,23 +32,18 @@
 		</v-table>
 	</v-card>
 </template>
+<script lang="ts" setup>
+import { Rocket } from '~/types/missions'
 
-<script lang="ts">
-export default {
-	props: {
-		rocket: {
-			type: Object,
-			required: true,
-		},
-	},
-	computed: {
-		formattedLaunchDate(): string {
-			return new Date(this.rocket.first_flight).toLocaleDateString('en-US', {
-				month: 'short',
-				day: 'numeric',
-				year: 'numeric',
-			})
-		},
-	},
-}
+const props = defineProps<{
+	rocket: Rocket
+}>()
+
+const formattedLaunchDate = computed(() => {
+	return new Date(props.rocket.first_flight).toLocaleDateString('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric',
+	})
+})
 </script>

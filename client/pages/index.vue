@@ -33,22 +33,7 @@
 </template>
 <script lang="ts" setup>
 import useSortAndFilterLaunches from '../composables/SortLaunches'
-
-interface Launch {
-	id: string
-	mission_name: string
-	launch_date_local: string
-	details: string
-	rocket: {
-		rocket_name: string
-		rocket: {
-			id: string
-		}
-	}
-	launch_site: {
-		site_name: string
-	}
-}
+import type { Launch } from '../types/missions'
 
 const query = gql`
 	query getLaunches {

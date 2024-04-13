@@ -16,56 +16,43 @@
 			>
 				{{ launch.rocket.rocket_name }}
 			</NuxtLink>
-			<v-btn class="ms-auto" @click="addToFavoritesHandler()">
-				<v-icon :color="favorite ? 'purple' : 'grey'" size="x-large">mdi-heart</v-icon>
+			<v-btn
+				class="ms-auto"
+				@click="
+					addToFavorites({ id: launch.rocket.rocket.id, rocket_name: launch.rocket.rocket_name })
+				"
+			>
+				<v-icon :color="favRocket ? 'purple' : 'grey'" size="x-large">mdi-heart</v-icon>
 			</v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
-
-<script lang="ts">
+<script lang="ts" setup>
 import { useFavorite } from '../stores/useFavorites'
+import type { Launch } from '../types/missions'
 
-export default {
-	props: {
-		launch: {
-			type: Object,
-			required: true,
-		},
-	},
-	data() {
-		return {
-			favorite: false,
-		}
-	},
-	computed: {
-		formattedLaunchDate(): string {
-			return new Date(this.launch.launch_date_local).toLocaleDateString('en-US', {
-				month: 'short',
-				day: 'numeric',
-				year: 'numeric',
-			})
-		},
-	},
-	methods: {
-		getLaunchSite(site: { site_name: string }): string {
-			return site?.site_name || 'Site unavailable'
-		},
-		getDetails: (details: string): string => {
-			return details || 'No details available'
-		},
-		addToFavoritesHandler() {
-			const { addToFavorites } = useFavorite()
-			const rocket: {
-				id: string
-				rocket_name: string
-			} = {
-				id: this.launch.rocket.rocket.id,
-				rocket_name: this.launch.rocket.rocket_name,
-			}
-			addToFavorites(rocket)
-			this.favorite = true
-		},
-	},
+const props = defineProps<{
+	launch: Launch
+}>()
+
+const { addToFavorites, rockets } = useFavorite()
+const favRocket = computed(() => {
+	return rockets.some((rocket) => rocket.id === props.launch.rocket.rocket.id)
+})
+
+const formattedLaunchDate = computed((): string => {
+	return new Date(props.launch.launch_date_local).toLocaleDateString('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric',
+	})
+})
+
+function getLaunchSite(site: { site_name: string }): string {
+	return site?.site_name || 'Site unavailable'
+}
+
+function getDetails(details: string): string {
+	return details || 'No details available'
 }
 </script>

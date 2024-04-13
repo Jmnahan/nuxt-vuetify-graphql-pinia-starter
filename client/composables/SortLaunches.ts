@@ -1,18 +1,4 @@
-interface Launch {
-	id: string
-	mission_name: string
-	launch_date_local: string
-	details: string
-	rocket: {
-		rocket_name: string
-		rocket: {
-			id: string
-		}
-	}
-	launch_site: {
-		site_name: string
-	}
-}
+import type { Launch } from '../types/missions'
 
 export default function useSortAndFilterLaunches(
 	launches: Launch[],

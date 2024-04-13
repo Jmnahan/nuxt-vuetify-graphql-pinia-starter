@@ -8,11 +8,3 @@ export const useFavorite = defineStore('favorite', {
 		},
 	},
 })
-
-// watch(
-// 	() => useFavorite().rockets,
-// 	(rockets) => {
-// 		localStorage.setItem('rockets', JSON.stringify(rockets))
-// 	},
-// 	{ deep: true },
-// )
